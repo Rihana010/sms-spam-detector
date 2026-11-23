@@ -1,0 +1,11 @@
+label,text
+spam,"Your electricity supply will stop at 9 PM tonight unless you pay Rs 850 via this short link: http://elec-pay-fast.in"
+spam,"Dear customer, we detected a payment to a new merchant. Confirm it by sharing the OTP you received."
+spam,"Congratulations! Your number was picked for a Rs 50,000 gift voucher. Claim it at http://gift-claim-desk.co"
+spam,"Work from home and earn Rs 2500 daily. Register with a Rs 400 security deposit today."
+spam,"Your account will be frozen. Update your PIN at http://pin-update-help.net to continue."
+ham,"Your Swiggy Instamart order will arrive in 10 minutes. OTP for delivery: 4402."
+ham,"Your account statement for October is now available in the net banking section."
+ham,"Your Rapido ride to Majestic is confirmed. Auto number KA19 4567."
+ham,"Rs 2,000 debited from your account via NEFT to ABC Traders on 22-Nov."
+ham,"Your college fee receipt for Semester 3 has been uploaded to the portal."
