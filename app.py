@@ -1,31 +1,59 @@
+from pathlib import Path
+
 import joblib
 import streamlit as st
 
+MODEL_PATH = Path(__file__).resolve().parent / "model.joblib"
+
+st.set_page_config(
+    page_title="SMS Spam Detector",
+    page_icon="🛡️",
+    layout="centered"
+)
+
+
 @st.cache_resource
-def load_model():
-    return joblib.load("model.joblib")
+def load_model(model_path):
+    path = Path(model_path)
 
-model = load_model()
+    if not path.is_file():
+        raise FileNotFoundError("Trained model not found.")
 
+    return joblib.load(path)
+
+
+# Application header
 st.title("SMS Spam Detector")
-st.write("Paste a message and check whether it looks like spam.")
+st.write(
+    "Analyze suspicious SMS messages using "
+    "machine learning."
+)
 
-message = st.text_area("Message", height=150)
+st.info(
+    "Paste an SMS message below to check whether "
+    "it looks like spam."
+)
 
-if st.button("Check") and message.strip():
-    p_spam = model.predict_proba([message])[0][1]
-    if p_spam >= 0.5:
-        st.error(f"Likely SPAM (confidence {p_spam:.0%})")
-    else:
-        st.success(f"Likely NOT spam (confidence {1 - p_spam:.0%})")
+# Load trained model safely
+try:
+    model = load_model(str(MODEL_PATH))
 
-    with st.expander("Why? Top words that pushed the score"):
-        vec = model.named_steps["tfidfvectorizer"]
-        clf = model.named_steps["logisticregression"]
-        X = vec.transform([message])
-        contributions = X.multiply(clf.coef_[0]).toarray()[0]
-        names = vec.get_feature_names_out()
-        top = contributions.argsort()[::-1][:8]
-        for i in top:
-            if contributions[i] != 0:
-                st.write(f"`{names[i]}`: {contributions[i]:+.2f}")
+except FileNotFoundError:
+    st.error("The trained model is missing.")
+
+    st.markdown(
+        """
+        ### How to fix this
+
+        Open your project terminal and run:
+
+        ```bash
+        python get_data.py
+        python train.py
+        ```
+
+        This downloads the dataset and trains the model.
+        """
+    )
+
+    st.stop()
