@@ -3,3 +3,5 @@ scikit-learn
 joblib
 streamlit
 requests
+# optional, needed only for embed_model.py (pulls in PyTorch):
+# sentence-transformers

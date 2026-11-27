@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 
 import joblib
@@ -282,6 +283,7 @@ if __name__ == "__main__":
 
     except (FileNotFoundError, ValueError) as error:
         print(f"\nTraining error: {error}")
+        sys.exit(1)
 
     except Exception as error:
         print(f"\nUnexpected training failure: {error}")

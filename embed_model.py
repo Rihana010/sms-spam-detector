@@ -6,7 +6,6 @@ from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 
 DATA_PATH = "data/SMSSpamCollection"
-encoder = SentenceTransformer("all-MiniLM-L6-v2")
 
 
 def load_data():
@@ -18,6 +17,7 @@ def load_data():
 
 
 def main():
+    encoder = SentenceTransformer("all-MiniLM-L6-v2")
     df = load_data()
     X_train, X_test, y_train, y_test = train_test_split(
         df["text"], df["y"], test_size=0.2, stratify=df["y"], random_state=42

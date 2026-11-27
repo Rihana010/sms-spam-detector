@@ -41,7 +41,7 @@ streamlit run app.py      # opens the web app at localhost:8501
 To run the evaluation on your own messages:
 
 ```bash
-python evaluate_mine.py
+python evaluate_mine.py my_tests.csv   # or any CSV with label and text columns
 ```
 
 ## Project structure
