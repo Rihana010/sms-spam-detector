@@ -57,3 +57,21 @@ except FileNotFoundError:
     )
 
     st.stop()
+
+message = st.text_area("Message")
+
+if st.button("Check") and message.strip():
+    spam_prob = model.predict_proba([message])[0][1]
+    st.metric("Spam probability", f"{spam_prob:.0%}")
+
+    # Top words pushing toward spam (positive) or ham (negative)
+    vectorizer = model.named_steps["tfidfvectorizer"]
+    clf = model.named_steps["logisticregression"]
+    features = vectorizer.transform([message]).toarray()[0]
+    contributions = features * clf.coef_[0]
+    names = vectorizer.get_feature_names_out()
+    top = contributions.argsort()[::-1][:5]
+    st.write("Top words:")
+    for i in top:
+        if features[i] > 0:
+            st.write(f"{names[i]}: {contributions[i]:+.2f}")
